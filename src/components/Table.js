@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Table = ({ columns, rows, format }) => {
+const Table = ({ columns, rows, format, className }) => {
 
   const colDataElems = (row) => {
     return columns.map(col => {
@@ -16,7 +16,7 @@ const Table = ({ columns, rows, format }) => {
   )
 
   return (
-    <table>
+    <table className={className}>
       <tbody>
         {rows.map(row => tdRow(row))}
       </tbody>
