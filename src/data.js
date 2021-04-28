@@ -1396,13 +1396,11 @@ const airports = [
 ];
 
 const getAirlineById = (id) => {
-  const airline = airlines.find(airl => airl.id === id)
-  return airline.name
+  return airlines.find(airl => airl.id === id)
 }
 
 const getAirportByCode = (code) => {
-  const airport = airports.find(airp => airp.code === code)
-  return airport.name
+  return airports.find(airp => airp.code === code)
 }
 
 export default {
