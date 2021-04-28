@@ -18,8 +18,12 @@ const Table = ({ columns, rows, format, className }) => {
   )
 
   const rowsToShow = rows.slice(page, page + pageSize)
-  const nextPage = () => setPage(page + pageSize)
-  const prevPage = () => {
+  const nextPage = (event) => {
+    event.preventDefault()
+    setPage(page + pageSize)
+  }
+  const prevPage = (event) => {
+    event.preventDefault()
     let newPage = page - pageSize
     setPage(newPage >= 0 ? newPage : 0)
   }
@@ -32,9 +36,13 @@ const Table = ({ columns, rows, format, className }) => {
         </tbody>
       </table>
       <div>
-        <p>Showing {page} - {page + pageSize} routes of {rows.length} total routes.</p>
-        <button onClick={prevPage} >Previous</button>
-        <button onClick={nextPage} >Next</button>
+        <p>Showing {page + 1} - {page + pageSize} routes of {rows.length} total routes.</p>
+        <button 
+          onClick={prevPage}
+          disabled={page === 0}>Previous</button>
+        <button
+          onClick={nextPage}
+          disabled={page + pageSize >= rows.length } >Next</button>
       </div>
     </div>
   )
