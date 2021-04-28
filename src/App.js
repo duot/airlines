@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useState } from 'react';
 import './App.css';
 import data from './data'
+const { getAirportByCode, getAirlineById } = data
 
 const App = () => {
   const [routes, setRoutes] = useState([])
@@ -20,7 +21,17 @@ const App = () => {
         </p>
         <table>
           {routes.map(({ airline, src, dest }) => 
-            <tr>`{airline} {src}, {dest}`</tr>
+            <tr>
+              <td>
+                {getAirlineById(airline)}
+              </td>
+              <td>
+                {getAirportByCode(src)}
+              </td>
+              <td>
+                {getAirportByCode(dest)}
+              </td>
+            </tr>
           )}
         </table>
       </section>
