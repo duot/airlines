@@ -18,6 +18,11 @@ const Table = ({ columns, rows, format, className }) => {
   )
 
   const rowsToShow = rows.slice(page, page + pageSize)
+  const nextPage = () => setPage(page + pageSize)
+  const prevPage = () => {
+    let newPage = page - pageSize
+    setPage(newPage >= 0 ? newPage : 0)
+  }
 
   return (
     <div>
@@ -28,6 +33,8 @@ const Table = ({ columns, rows, format, className }) => {
       </table>
       <div>
         <p>Showing {page} - {page + pageSize} routes of {pageSize} total routes.</p>
+        <button onClick={prevPage} >Previous</button>
+        <button onClick={nextPage} >Next</button>
       </div>
     </div>
   )
