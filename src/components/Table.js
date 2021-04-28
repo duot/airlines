@@ -32,7 +32,7 @@ const Table = ({ columns, rows, format, className }) => {
         </tbody>
       </table>
       <div>
-        <p>Showing {page} - {page + pageSize} routes of {pageSize} total routes.</p>
+        <p>Showing {page} - {page + pageSize} routes of {rows.length} total routes.</p>
         <button onClick={prevPage} >Previous</button>
         <button onClick={nextPage} >Next</button>
       </div>
