@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 
-const Table = ({ columns, rows, format, className }) => {
-  const [pageSize, setPageSize] = useState(25)
+const Table = ({ columns, rows, format, className,
+  pageSize = 25,
+}) => {
   const [page, setPage] = useState(0)
 
   const colDataElems = (row) => {
