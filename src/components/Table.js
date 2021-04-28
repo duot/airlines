@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const Table = ({ columns, rows, format, className }) => {
+  const [pageSize, setPageSize] = useState(25)
+  const [page, setPage] = useState(0)
 
   const colDataElems = (row) => {
     return columns.map(col => {
@@ -15,12 +17,19 @@ const Table = ({ columns, rows, format, className }) => {
     </tr>
   )
 
+  const rowsToShow = rows.slice(page, page + pageSize)
+
   return (
-    <table className={className}>
-      <tbody>
-        {rows.map(row => tdRow(row))}
-      </tbody>
-    </table>
+    <div>
+      <table className={className}>
+        <tbody>
+          {rowsToShow.map(row => tdRow(row))}
+        </tbody>
+      </table>
+      <div>
+        <p>Showing {page} - {page + pageSize} routes of {pageSize} total routes.</p>
+      </div>
+    </div>
   )
 }
 
