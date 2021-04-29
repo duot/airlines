@@ -1,7 +1,8 @@
 import React, { Component, useEffect, useState } from 'react';
 import './App.css';
+import Select from './components/Select';
 import Table from './components/Table'
-import data from './data'
+import DATA from './data'
 
 const App = () => {
   const [routes, setRoutes] = useState([])
@@ -14,14 +15,16 @@ const App = () => {
 
   const formatValue = (property, value) => {
     switch(property) {
-      case "airline": return data.getAirlineById(value).name
-      default: return data.getAirportByCode(value).name
+      case "airline": return DATA.getAirlineById(value).name
+      default: return DATA.getAirportByCode(value).name
     }
   }
 
   useEffect(() => {
-    setRoutes(data.routes)
+    setRoutes(DATA.routes)
   }, [])
+
+  const filteredAirlines = DATA.airlines
 
   return (
     <div className="app">
@@ -32,6 +35,9 @@ const App = () => {
         <p>
           Welcome to the app!
         </p>
+
+        <Select options={filteredAirlines} valueKey="id" titleKey="name"
+  allTitle="All Airlines" value="" onSelect={console.log} />
         <Table
           className="route-table"
           columns={columns}

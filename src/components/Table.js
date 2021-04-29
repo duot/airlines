@@ -36,7 +36,7 @@ const Table = ({ columns, rows, format, className,
           {rowsToShow.map(row => tdRow(row))}
         </tbody>
       </table>
-      <div>
+      <div className="pagination">
         <p>Showing {page + 1} - {page + pageSize} routes of {rows.length} total routes.</p>
         <button 
           onClick={prevPage}
