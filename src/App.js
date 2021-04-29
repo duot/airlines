@@ -6,6 +6,7 @@ import DATA from './data'
 
 const App = () => {
   const [routes, setRoutes] = useState([])
+  const [airline, setAirline] = useState('all')
 
   const columns = [
     { name: 'Airline', property: 'airline' },
@@ -24,7 +25,22 @@ const App = () => {
     setRoutes(DATA.routes)
   }, [])
 
+  const handleAirlineSelect = (value) => {
+    console.log(value)
+    if (value !== "all") {
+      value = parseInt(value, 10)
+    }
+    setAirline(value)
+  }
+
   const filteredAirlines = DATA.airlines
+
+  const filteredRoutes = routes.filter(route => {
+    return (
+      (airline !== 'all' && route.airline === airline) ||
+      (airline === 'all')
+    )
+  })
 
   return (
     <div className="app">
@@ -36,12 +52,18 @@ const App = () => {
           Welcome to the app!
         </p>
 
-        <Select options={filteredAirlines} valueKey="id" titleKey="name"
-  allTitle="All Airlines" value="" onSelect={console.log} />
+        <Select 
+          options={filteredAirlines}
+          valueKey="id"
+          titleKey="name"
+          allTitle="All Airlines"
+          value={airline}
+          onSelect={handleAirlineSelect}
+        />
         <Table
           className="route-table"
           columns={columns}
-          rows={routes}
+          rows={filteredRoutes}
           format={formatValue}
         />
       </section>
