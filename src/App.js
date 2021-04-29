@@ -7,6 +7,7 @@ import DATA from './data'
 const App = () => {
   const [routes, setRoutes] = useState([])
   const [airline, setAirline] = useState('all')
+  const [airport, setAirport] = useState('all')
 
   const columns = [
     { name: 'Airline', property: 'airline' },
@@ -33,12 +34,29 @@ const App = () => {
     setAirline(value)
   }
 
-  const filteredAirlines = DATA.airlines
+  const handleAirportSelect = (value) => setAirport(value)
 
-  const filteredRoutes = routes.filter(route => {
+  const airlineOptions = DATA.airlines
+
+  const filteredByRoutes = routes.filter(route => {
     return (
       (airline !== 'all' && route.airline === airline) ||
       (airline === 'all')
+    )
+  })
+
+  const airportSet = new Set()
+  filteredByRoutes.forEach(route => {
+    airportSet.add(route.src)
+    airportSet.add(route.dest)
+  })
+
+  const airportOptions = DATA.airports.filter(airport => airportSet.has(airport.code))
+
+  const filteredByAirport = filteredByRoutes.filter(route => {
+    return (
+      (airport === 'all') ||
+      (airport !== 'all' && (airport === route.src || airport === route.dest))
     )
   })
 
@@ -53,17 +71,25 @@ const App = () => {
         </p>
 
         <Select 
-          options={filteredAirlines}
+          options={airlineOptions}
           valueKey="id"
           titleKey="name"
           allTitle="All Airlines"
           value={airline}
           onSelect={handleAirlineSelect}
         />
+        <Select
+          options={airportOptions}
+          valueKey="code"
+          titleKey="name"
+          allTitle="All Airports"
+          value={airport}
+          onSelect={handleAirportSelect}
+        />
         <Table
           className="route-table"
           columns={columns}
-          rows={filteredRoutes}
+          rows={filteredByAirport}
           format={formatValue}
         />
       </section>

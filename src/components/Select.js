@@ -27,7 +27,7 @@ const Select = ({
   })
 
   optionElements.unshift(
-    <option key={value} value={value}>
+    <option key="all" value="all">
       {allTitle}
     </option>
   )
