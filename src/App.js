@@ -35,6 +35,11 @@ const App = () => {
   }
 
   const handleAirportSelect = (value) => setAirport(value)
+  const resetFilters = () => {
+    setAirline('all')
+    setAirport('all')
+  }
+  const defaultFilters = airline === 'all' && airport === 'all'
 
   const airlineOptions = DATA.airlines
 
@@ -69,23 +74,30 @@ const App = () => {
         <p>
           Welcome to the app!
         </p>
-
-        <Select 
-          options={airlineOptions}
-          valueKey="id"
-          titleKey="name"
-          allTitle="All Airlines"
-          value={airline}
-          onSelect={handleAirlineSelect}
-        />
-        <Select
-          options={airportOptions}
-          valueKey="code"
-          titleKey="name"
-          allTitle="All Airports"
-          value={airport}
-          onSelect={handleAirportSelect}
-        />
+        <p>
+          Show routes on
+          <Select
+            options={airlineOptions}
+            valueKey="id"
+            titleKey="name"
+            allTitle="All Airlines"
+            value={airline}
+            onSelect={handleAirlineSelect}
+          />
+          through
+          <Select
+            options={airportOptions}
+            valueKey="code"
+            titleKey="name"
+            allTitle="All Airports"
+            value={airport}
+            onSelect={handleAirportSelect}
+          />
+          <button
+            onClick={resetFilters}
+            disabled={defaultFilters}
+          >Clear Filters</button>
+        </p>
         <Table
           className="route-table"
           columns={columns}
