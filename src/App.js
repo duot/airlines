@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 import Map from './components/Map';
 import Select from './components/Select';
@@ -113,7 +113,7 @@ const App = () => {
           >Show All Routes</button>
         </p>
         <Table
-          className="route-table"
+          className="routes-table"
           columns={columns}
           rows={filteredRoutes}
           format={formatValue}
