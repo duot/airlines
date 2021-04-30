@@ -43,26 +43,23 @@ const App = () => {
 
   const airlineOptions = DATA.airlines
 
-  const filteredByRoutes = routes.filter(route => {
+  const filteredRoutes = routes.filter(route => {
     return (
-      (airline !== 'all' && route.airline === airline) ||
-      (airline === 'all')
+      (airline === 'all' || route.airline === airline) &&
+      (airport === 'all' || (airport === route.src || airport === route.dest))
     )
   })
 
   const airportSet = new Set()
-  filteredByRoutes.forEach(route => {
+  filteredRoutes.forEach(route => {
     airportSet.add(route.src)
     airportSet.add(route.dest)
   })
 
-  const airportOptions = DATA.airports.filter(airport => airportSet.has(airport.code))
-
-  const filteredByAirport = filteredByRoutes.filter(route => {
-    return (
-      (airport === 'all') ||
-      (airport !== 'all' && (airport === route.src || airport === route.dest))
-    )
+  // const airportOptions = DATA.airports.filter(airport => airportSet.has(airport.code))
+  const airportOptions = DATA.airports.map(airport => {
+    const active = airportSet.has(airport.code)
+    return Object.assign({}, airport, { active })
   })
 
   return (
@@ -84,7 +81,7 @@ const App = () => {
             value={airline}
             onSelect={handleAirlineSelect}
           />
-          through
+          going through
           <Select
             options={airportOptions}
             valueKey="code"
@@ -96,12 +93,12 @@ const App = () => {
           <button
             onClick={resetFilters}
             disabled={defaultFilters}
-          >Clear Filters</button>
+          >Show All Routes</button>
         </p>
         <Table
           className="route-table"
           columns={columns}
-          rows={filteredByAirport}
+          rows={filteredRoutes}
           format={formatValue}
         />
       </section>

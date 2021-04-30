@@ -7,6 +7,7 @@ const Select = ({
   options = [],
   valueKey = "",
   titleKey = "",
+  enabledKey = undefined,
   value = "all",
   allTitle = "all",
   onSelect = (_) => null,
@@ -17,10 +18,11 @@ const Select = ({
     onSelect(event.target.value)
   }
 
-  let optionElements = options.map(option => {
+  const optionElements = options.map(option => {
     const value = option[valueKey]
+    const enabled = enabledKey === undefined || !!option[enabledKey]
     return (
-      <option key={value} value={value}>
+      <option key={value} value={value} disabled={!enabled}>
         {option[titleKey]}
       </option>
     )
