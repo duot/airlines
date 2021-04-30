@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from 'react';
 import './App.css';
+import Map from './components/Map';
 import Select from './components/Select';
 import Table from './components/Table'
 import DATA from './data'
@@ -16,7 +17,7 @@ const App = () => {
   ];
 
   const formatValue = (property, value) => {
-    switch(property) {
+    switch (property) {
       case "airline": return DATA.getAirlineById(value).name
       default: return DATA.getAirportByCode(value).name
     }
@@ -67,12 +68,21 @@ const App = () => {
     return { ...airline, active }
   })
 
+  const xyNCoord = (n, { lat, long }) => ({ ["x" + n]: long, ["y" + n]: lat })
+
+  const routeCoordinates = filteredRoutes.map(({ src, dest }) => {
+    const start = xyNCoord(1, DATA.getAirportByCode(src))
+    const end = xyNCoord(2, DATA.getAirportByCode(dest))
+    return { ...start, ...end }
+  })
+
   return (
     <div className="app">
       <header className="header">
         <h1 className="title">Airline Routes</h1>
       </header>
       <section>
+        <Map lines={routeCoordinates} />
         <p>
           Welcome to the app!
         </p>
