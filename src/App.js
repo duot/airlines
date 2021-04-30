@@ -41,8 +41,6 @@ const App = () => {
   }
   const defaultFilters = airline === 'all' && airport === 'all'
 
-  const airlineOptions = DATA.airlines
-
   const filteredRoutes = routes.filter(route => {
     return (
       (airline === 'all' || route.airline === airline) &&
@@ -56,10 +54,17 @@ const App = () => {
     airportSet.add(route.dest)
   })
 
-  // const airportOptions = DATA.airports.filter(airport => airportSet.has(airport.code))
   const airportOptions = DATA.airports.map(airport => {
     const active = airportSet.has(airport.code)
-    return Object.assign({}, airport, { active })
+    return { ...airport, active }
+  })
+
+  const airlineSet = new Set()
+  filteredRoutes.forEach(({ airline }) => airlineSet.add(airline))
+
+  const airlineOptions = DATA.airlines.map(airline => {
+    const active = airlineSet.has(airline.id)
+    return { ...airline, active }
   })
 
   return (
@@ -77,6 +82,7 @@ const App = () => {
             options={airlineOptions}
             valueKey="id"
             titleKey="name"
+            enabledKey="active"
             allTitle="All Airlines"
             value={airline}
             onSelect={handleAirlineSelect}
@@ -86,6 +92,7 @@ const App = () => {
             options={airportOptions}
             valueKey="code"
             titleKey="name"
+            enabledKey="active"
             allTitle="All Airports"
             value={airport}
             onSelect={handleAirportSelect}
